@@ -13,19 +13,10 @@
       </list>
     </option>
   </component>
+  <component name="ProjectResources">
+    <resource url="http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" location="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectRootManager">
     <output url="file://$PROJECT_DIR$/out" />
-  </component>
-  <component name="SaveActionSettings">
-    <option name="actions">
-      <set>
-        <option value="activate" />
-        <option value="organizeImports" />
-        <option value="reformat" />
-        <option value="reload" />
-        <option value="missingOverrideAnnotation" />
-      </set>
-    </option>
-    <option name="configurationPath" value="" />
   </component>
 </project>

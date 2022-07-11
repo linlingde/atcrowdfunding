@@ -8,9 +8,13 @@ import com.atguigu.crowd.exception.LoginFailedException;
 import com.atguigu.crowd.mapper.AdminMapper;
 import com.atguigu.crowd.service.api.AdminService;
 import com.atguigu.crowd.utils.CrowdUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,7 +33,22 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public String saveAdmin(Admin admin) {
-        int insert = adminMapper.insert(admin);
+        // 将密码加密
+        String userPswd = admin.getUserPswd();
+        userPswd = CrowdUtil.toMd5(userPswd);
+        admin.setUserPswd(userPswd);
+        // 设置时间
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
+        String createTime = simpleDateFormat.format(date);
+        admin.setCreateTime(createTime);
+
+        int insert = 0;
+        try {
+            insert = adminMapper.insert(admin);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return insert == 0 ? "保存失败" : "保存成功";
     }
 
@@ -61,4 +80,28 @@ public class AdminServiceImpl implements AdminService {
         // 查询出Admin不为null,密码也匹配,登录成功
         return admin;
     }
+
+    /**
+     * @param keyword  查询关键词
+     * @param pageNum  当前页码
+     * @param pageSize 每页大小
+     * @return
+     */
+    @Override
+    public PageInfo<Admin> getPageInfo(String keyword, Integer pageNum, Integer pageSize) {
+        // 1. 调用PageHelper静态方法开启分页
+        PageHelper.startPage(pageNum, pageSize);
+
+        // 2. 执行查询
+        List<Admin> adminList = adminMapper.selectAdminByKeyword(keyword);
+
+        // 3. 封装到pageInfo对象中
+        return new PageInfo<>(adminList);
+    }
+
+    @Override
+    public void removeAdmin(Integer id) {
+        adminMapper.deleteByPrimaryKey(id);
+    }
+
 }

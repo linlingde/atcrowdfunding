@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import java.net.IDN;
 import java.util.List;
 
 /**
@@ -32,7 +31,7 @@ public class TestHandler {
 
     // 普通请求
     @RequestMapping("/test/ssm")
-    public String testSsm(ModelMap modelMap,HttpServletRequest request){
+    public String testSsm(ModelMap modelMap, HttpServletRequest request) {
         //isRequest(request);
 
         //String s = null;
@@ -41,7 +40,7 @@ public class TestHandler {
         List<Admin> admins = adminService.getAll();
 
 
-        modelMap.addAttribute("admins",admins);
+        modelMap.addAttribute("admins", admins);
 
         //System.out.println(1/0);
 
@@ -51,11 +50,11 @@ public class TestHandler {
 
     // Ajax请求
     @RequestMapping("/send/array.html")
-    public String testReceiveArrayOne(@RequestParam("array[]") List<Integer> args, HttpServletRequest request){
+    public String testReceiveArrayOne(@RequestParam("array[]") List<Integer> args, HttpServletRequest request) {
         //isRequest(request);
         String s = null;
         logger.info("s.length()" + s.length());
-        for(Integer arg : args){
+        for (Integer arg : args) {
             System.out.println(arg);
         }
 
@@ -63,7 +62,7 @@ public class TestHandler {
 
     }
 
-    private static void isRequest(HttpServletRequest request){
+    private static void isRequest(HttpServletRequest request) {
         boolean b = CrowdUtil.judgeRequestType(request);
         if (b)
             logger.info("is Ajax");

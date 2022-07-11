@@ -28,6 +28,16 @@
         <property name="mapperLocations" value="classpath:mybatis/mapper/*Mapper.xml"/>
         <!--装配数据源-->
         <property name="dataSource" ref="dataSource"/>
+        <property name="plugins">
+            <bean class="com.github.pagehelper.PageInterceptor">
+                <property name="properties">
+                    <value>
+                        helpDialect=mysql,
+                        reasonable=true
+                    </value>
+                </property>
+            </bean>
+        </property>
     </bean>
 
     <!--配置MapperScannerConfigurer来扫描Mapper所在的接口,将mybatis动态生成的实现类加载进IOC容器-->

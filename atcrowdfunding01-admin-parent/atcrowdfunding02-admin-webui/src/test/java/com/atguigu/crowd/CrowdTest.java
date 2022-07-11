@@ -26,7 +26,7 @@ import java.sql.SQLException;
 
 // Spring整合junit
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring-persist-mybatis.xml","classpath:spring-persist-tx.xml"})
+@ContextConfiguration(locations = {"classpath:spring-persist-mybatis.xml", "classpath:spring-persist-tx.xml"})
 public class CrowdTest {
 
     Logger logger;
@@ -42,17 +42,16 @@ public class CrowdTest {
     private AdminService adminService;
 
     @Before
-    public void Before(){
+    public void Before() {
         logger = LoggerFactory.getLogger(CrowdTest.class);
     }
 
     @Test
-    public void testTx(){
-        Admin admin = new Admin(null,"lld","lld","lld","114@qq.com","2022-07-07");
+    public void testTx() {
+        Admin admin = new Admin(null, "lld", "lld", "lld", "114@qq.com", "2022-07-07");
         String s = adminService.saveAdmin(admin);
         logger.info(s);
     }
-
 
 
     @Test
@@ -63,8 +62,8 @@ public class CrowdTest {
     }
 
     @Test
-    public void testInsertAdmin(){
-        Admin admin = new Admin(null,"lld","lld","lld","114@qq.com","2022-07-07");
+    public void testInsertAdmin() {
+        Admin admin = new Admin(null, "lld", "lld", "lld", "114@qq.com", "2022-07-07");
 
         int insert = adminMapper.insert(admin);
         // sout本质上是一个IO操作,通常IO操作是比较消耗性能的
@@ -73,12 +72,20 @@ public class CrowdTest {
     }
 
     @Test
-    public void testLog(){
+    public void testLog() {
 
         // 把打印日志的类传进去,
         Logger logger = LoggerFactory.getLogger(CrowdTest.class);
         logger.info("debug 级别日志");
 
+    }
+
+    @Test
+    public void testInsertAdmins() {
+        for (int i = 0; i < 300; i++) {
+            Admin admin = new Admin(null, "lld" + i, "lld" + i, "lld" + i, "114@qq.com" + i, "2022-07-07");
+            adminMapper.insert(admin);
+        }
     }
 
 }

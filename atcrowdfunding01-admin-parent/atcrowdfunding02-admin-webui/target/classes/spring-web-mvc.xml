@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+    <!--配置Spring MVC扫描的包-->
+    <context:component-scan base-package="com.atguigu.crowd.mvc"/>
+
+    <!--配置MVC的注解驱动-->
+    <!--
+        例如:
+            RequestBody
+            ResponseBody等
+    -->
+    <mvc:annotation-driven/>
+
+
+    <!--配置视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="internalResourceView">
+        <property name="prefix" value="/WEB-INF/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--将请求地址与视图名称关联起来-->
+    <mvc:view-controller path="/admin/to/login/page.html" view-name="admin-login"/>
+    <mvc:view-controller path="/admin/to/main/page.html" view-name="admin-main"/>
+    <mvc:view-controller path="/admin/add.html" view-name="admin-add"/>
+    <mvc:view-controller path="/role/get/page.json" view-name="role-page"/>
+
+    <!--注册拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!--
+                配置要拦截的资源:
+                    /*:代表一层路径
+                    /**:代表多层路径
+            -->
+            <mvc:mapping path="/**"/>
+            <!--配置不拦截的资源-->
+            <mvc:exclude-mapping path="/admin/to/login/page.html"/>
+            <mvc:exclude-mapping path="/admin/do/login.html"/>
+            <mvc:exclude-mapping path="/admin/do/logout.html"/>
+            <bean class="com.atguigu.crowd.mvc.interceptor.LoginInterceptor" id="loginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!--配置xml异常处理机制-->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"
+          id="simpleMappingExceptionResolver">
+        <!--配置异常类型和具体视图页面的对应关系-->
+        <property name="exceptionMappings">
+            <props>
+                <!--出现Exception,跳转到system-error-->
+                <prop key="java.lang.Exception">system-error</prop>
+                <prop key="com.atguigu.crowd.exception.AccessForbiddenException">admin-login</prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>

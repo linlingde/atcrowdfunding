@@ -1,7 +1,9 @@
 package com.atguigu.crowd;
 
 import com.atguigu.crowd.entity.Admin;
+import com.atguigu.crowd.entity.Role;
 import com.atguigu.crowd.mapper.AdminMapper;
+import com.atguigu.crowd.mapper.RoleMapper;
 import com.atguigu.crowd.service.api.AdminService;
 import org.junit.Before;
 import org.junit.Test;
@@ -88,4 +90,15 @@ public class CrowdTest {
         }
     }
 
+    @Autowired
+    RoleMapper roleMapper;
+
+    @Test
+    public void testInsertRole() {
+        for (int i = 0; i < 300; i++) {
+            Role role = new Role(null, "lld" + i);
+            roleMapper.insert(role);
+
+        }
+    }
 }

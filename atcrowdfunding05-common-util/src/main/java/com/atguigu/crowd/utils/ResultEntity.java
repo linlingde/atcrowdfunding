@@ -22,20 +22,19 @@ public class ResultEntity<T> {
     private T data;
 
 
-
     // 请求成功但无数据返回时
-    public static <Type> ResultEntity<Type> successWithoutData(){
-        return new ResultEntity<Type>(SUCCESS,null,null);
+    public static <Type> ResultEntity<Type> successWithoutData() {
+        return new ResultEntity<Type>(SUCCESS, null, null);
     }
 
     // 请求成功有数据返回时
-    public static <Type> ResultEntity<Type> successWithData(Type data){
-        return new ResultEntity<Type>(SUCCESS, null,data);
+    public static <Type> ResultEntity<Type> successWithData(Type data) {
+        return new ResultEntity<Type>(SUCCESS, null, data);
     }
 
     // 请求失败时
-    public static <Type> ResultEntity<Type> failed(String message){
-        return new ResultEntity<Type>(FAILED,message,null);
+    public static <Type> ResultEntity<Type> failed(String message) {
+        return new ResultEntity<Type>(FAILED, message, null);
     }
 
 

@@ -4,6 +4,8 @@ import com.atguigu.crowd.constant.CrowdConstant;
 import com.atguigu.crowd.entity.Admin;
 import com.atguigu.crowd.entity.AdminExample;
 import com.atguigu.crowd.entity.AdminExample.Criteria;
+import com.atguigu.crowd.exception.LoginAcctAlreadyInUseException;
+import com.atguigu.crowd.exception.LoginAcctAlreadyInUseForUpdateException;
 import com.atguigu.crowd.exception.LoginFailedException;
 import com.atguigu.crowd.mapper.AdminMapper;
 import com.atguigu.crowd.service.api.AdminService;
@@ -11,6 +13,7 @@ import com.atguigu.crowd.utils.CrowdUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -47,7 +50,8 @@ public class AdminServiceImpl implements AdminService {
         try {
             insert = adminMapper.insert(admin);
         } catch (Exception e) {
-            e.printStackTrace();
+            if (e instanceof DuplicateKeyException)
+                throw new LoginAcctAlreadyInUseException(CrowdConstant.MESSAGE_LOGIN_ACC_ALREADY_IN_USED);
         }
         return insert == 0 ? "保存失败" : "保存成功";
     }
@@ -88,7 +92,7 @@ public class AdminServiceImpl implements AdminService {
      * @return
      */
     @Override
-    public PageInfo<Admin> getPageInfo(String keyword, Integer pageNum, Integer pageSize) {
+    public PageInfo<Admin> getAdminPageInfo(String keyword, Integer pageNum, Integer pageSize) {
         // 1. 调用PageHelper静态方法开启分页
         PageHelper.startPage(pageNum, pageSize);
 
@@ -102,6 +106,23 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void removeAdmin(Integer id) {
         adminMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public Admin findAdminById(Integer id) {
+        Admin admin = adminMapper.selectByPrimaryKey(id);
+        return admin;
+    }
+
+    @Override
+    public void updateAdmin(Admin admin) {
+        try {
+            // 表示有选择的更新,对于null值不更新
+            adminMapper.updateByPrimaryKeySelective(admin);
+        } catch (Exception e) {
+            if (e instanceof DuplicateKeyException)
+                throw new LoginAcctAlreadyInUseForUpdateException(CrowdConstant.MESSAGE_LOGIN_ACC_ALREADY_IN_USED);
+        }
     }
 
 }

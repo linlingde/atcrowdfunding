@@ -55,7 +55,7 @@ public class AdminHandler {
     }
 
     @RequestMapping("/admin/get/page.html")
-    public String getPageInfo(
+    public String getAdminPageInfo(
             @RequestParam(value = "keyword", defaultValue = "") String keyword,
             @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
@@ -64,7 +64,7 @@ public class AdminHandler {
         logger.info(pageNum.toString());
 
         // 调用Service方法获取PageInfo对象
-        PageInfo<Admin> pageInfo = adminService.getPageInfo(keyword, pageNum, pageSize);
+        PageInfo<Admin> pageInfo = adminService.getAdminPageInfo(keyword, pageNum, pageSize);
         logger.info(pageInfo.toString());
         // 将查询到的数据放到modelMap中
         modelMap.put(CrowdConstant.ATTR_NAME_PAGE_INFO, pageInfo);
@@ -89,5 +89,25 @@ public class AdminHandler {
     public String addAdmin(Admin admin) {
         adminService.saveAdmin(admin);
         return "redirect:/admin/get/page.html?pageNum=" + Integer.MAX_VALUE;
+    }
+
+    @RequestMapping("/admin/edit/{adminId}/{pageNum}/{keyword}.html")
+    public String editAdmin(
+            @PathVariable("adminId") Integer adminId,
+            @PathVariable("pageNum") Integer pageNum,
+            @PathVariable("keyword") String keyword,
+            ModelMap modelMap) {
+        Admin admin = adminService.findAdminById(adminId);
+        modelMap.put(CrowdConstant.ATTR_NAME_EDIT_ADMIN, admin);
+        modelMap.put("keyword", keyword);
+        modelMap.put("pageNum", pageNum);
+        return "admin-edit";
+    }
+
+    @RequestMapping("/admin/update.html")
+    public String updateAdmin(Admin admin, @RequestParam("keyword") String keyword, @RequestParam("pageNum") Integer pageNum) {
+        adminService.updateAdmin(admin);
+        //System.err.println(admin);
+        return "redirect:/admin/get/page.html?pageNum=" + pageNum + "&keyword=" + keyword;
     }
 }

@@ -1,6 +1,8 @@
 package com.atguigu.crowd.mvc.config;
 
 import com.atguigu.crowd.constant.CrowdConstant;
+import com.atguigu.crowd.exception.LoginAcctAlreadyInUseException;
+import com.atguigu.crowd.exception.LoginAcctAlreadyInUseForUpdateException;
 import com.atguigu.crowd.exception.LoginFailedException;
 import com.atguigu.crowd.utils.CrowdUtil;
 import com.atguigu.crowd.utils.ResultEntity;
@@ -59,13 +61,45 @@ public class CrowdExceptionResolver {
 
     // @ExceptionHandler:将一个具体的异常类型与一段java程序关联起来
     @ExceptionHandler(value = LoginFailedException.class)
-    public ModelAndView resolveLoginFailedException(Exception e,
+    public ModelAndView resolveLoginFailedException(LoginFailedException e,
                                                     HttpServletRequest request,
                                                     HttpServletResponse response)
             throws IOException {
 
 
         String name = "admin-login";
+        ModelAndView modelAndView = commonResolve(e, request, response, name);
+        if (modelAndView == null) return null;
+
+        // 9. 返回ModelAndView
+        return modelAndView;
+
+    }
+
+    @ExceptionHandler(value = LoginAcctAlreadyInUseForUpdateException.class)
+    public ModelAndView resolveLoginFailedException(LoginAcctAlreadyInUseForUpdateException e,
+                                                    HttpServletRequest request,
+                                                    HttpServletResponse response)
+            throws IOException {
+
+
+        String name = "system-error";
+        ModelAndView modelAndView = commonResolve(e, request, response, name);
+        if (modelAndView == null) return null;
+
+        // 9. 返回ModelAndView
+        return modelAndView;
+
+    }
+
+    @ExceptionHandler(value = LoginAcctAlreadyInUseException.class)
+    public ModelAndView resolveLoginAcctAlreadyInUse(LoginAcctAlreadyInUseException e,
+                                                     HttpServletRequest request,
+                                                     HttpServletResponse response)
+            throws IOException {
+
+
+        String name = "admin-add";
         ModelAndView modelAndView = commonResolve(e, request, response, name);
         if (modelAndView == null) return null;
 

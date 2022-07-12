@@ -118,9 +118,13 @@
                                             <button type="button" class="btn btn-success btn-xs">
                                                 <i class=" glyphicon glyphicon-check"></i>
                                             </button>
-                                            <button type="button" class="btn btn-primary btn-xs">
+                                                <%--<button type="button" class="btn btn-primary btn-xs">--%>
+                                                <%--    <i class=" glyphicon glyphicon-pencil"></i>--%>
+                                                <%--</button>--%>
+                                            <a class="btn btn-primary btn-xs"
+                                               href="admin/edit/${admin.id}/${requestScope.pageInfo.pageNum}/${param.keyword}.html">
                                                 <i class=" glyphicon glyphicon-pencil"></i>
-                                            </button>
+                                            </a>
                                             <a href="admin/remove/${admin.id}/${requestScope.pageInfo.pageNum}/${param.keyword}.html"
                                                class="btn btn-danger btn-xs">
                                                 <i class=" glyphicon glyphicon-remove"></i>

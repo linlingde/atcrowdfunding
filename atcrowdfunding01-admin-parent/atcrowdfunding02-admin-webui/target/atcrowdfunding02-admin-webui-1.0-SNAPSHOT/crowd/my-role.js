@@ -1,3 +1,22 @@
+// 声明专门的函数显示确认模态框
+function showConfirmModel(roleArray) {
+
+    // 创建全局数组,存放RoleId
+    window.roleIdArray = []
+    // 打开模态框
+    $("#confirmModel").modal("show");
+    $("#roleNameSpan").empty();
+    // 便利roleArray数组
+    for (let i = 0; i < roleArray.length; i++) {
+        let role = roleArray[i];
+        let roleName = role.name;
+        window.roleIdArray.push(role.id)
+        $("#roleNameSpan").append(roleName + "<br/>")
+    }
+
+}
+
+
 // 执行分页,生成页面效果
 function generatePage() {
     // 1. 获取分页数据
@@ -86,18 +105,14 @@ function fillTableBody(pageInfo) {
 
         // 组合数据
         let numberTd = "<td>" + (i + 1) + "</td>";
-        let checkBoxTd = "<td><input type='checkbox'/></td>";
+        let checkBoxTd = "<td><input id='" + role.id + "' class='itemBox' type='checkbox'/></td>";
         let roleNameTd = "<td>" + roleName + "</td>";
         let checkBtn = "<button type='button' class='btn btn-success btn-xs'><i class=' glyphicon glyphicon-check'></i></button>"
         let editBtn = "<button id='" + role.id + "' type='button' class='btn btn-primary btn-xs editBtn'><i class=' glyphicon glyphicon-pencil'></i></button>"
-        let deleteBtn = "<button id='deleteBtn' value='" + role.id + "' type='button' class='btn btn-danger btn-xs'><i class=' glyphicon glyphicon-remove'></i></button>"
+        let deleteBtn = "<button id='" + role.id + "' type='button' class='btn btn-danger btn-xs deleteBtn'><i class=' glyphicon glyphicon-remove'></i></button>"
 
         let buttonTd = "<td>" + checkBtn + editBtn + deleteBtn + "</td>"
-
-
         $("#rolePageBody").append("<tr>" + numberTd + checkBoxTd + roleNameTd + buttonTd + "</tr>")
-
-
     }
     generateNavigator(pageInfo);
 
@@ -173,45 +188,18 @@ function addRole() {
     })
 }
 
-
-// 更新Role
-function updateRole() {
-    // 获取id跟name
-    let roleId = $("#roleId").val();
-    let roleName = $("#roleName").val();
-    // 使用Ajax进行更新
-    $.ajax({
-        url: "role/update.json",
-        method: "POST",
-        data: {
-            id: roleId,
-            name: roleName
-        },
-        success: function (response) {
-            // 重新分页
-            generatePage();
-            // 关闭框框
-            $("#editModel").modal("hide");
-        }
-    })
+// 设置全选全不选功能
+function extracted() {
+    // 全选全部不选的设置其它多选框
+    $("#rolePageBody").on("click", ".itemBox", function () {
+        // 获取当前已经选中的itemBox数量
+        let checkedBoxCount = $(".itemBox:checked").length;
+        // 获取全部itemBox数量
+        let totalItemBoxCount = $(".itemBox").length;
+        // 两者数量相等--->将summaryBox设置为选中状态
+        // 两者数量不相等--->将summaryBox设置为未选中状态
+        $("#summaryBox").prop("checked", checkedBoxCount == totalItemBoxCount);
+    });
 }
 
-//
-// function deleteById() {
-//     // 获取id
-//     let roleId = $(".deleteBtn").val();
-//     // 发送请求,根据id删除role
-//     $.ajax({
-//         url: "role/deleteById.json",
-//         method: "POST",
-//         data: {
-//             id: roleId
-//         },
-//         success: function (response) {
-//             if (response.result == "SUCCESS") {
-//                 layer.msg("删除成功");
-//             }
-//             generatePage();
-//         }
-//     })
-// }
+

@@ -3,6 +3,8 @@ package com.atguigu.crowd.service.api;
 import com.atguigu.crowd.entity.Role;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
+
 /**
  * @author linlingde
  * @version 1.0
@@ -20,6 +22,7 @@ public interface RoleService {
     void updateRole(Role role);
 
     void deleteRoleById(Integer id);
-    
+
+    void removeRole(List<Integer> roleIdList);
 
 }

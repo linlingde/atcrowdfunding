@@ -6,9 +6,12 @@ import com.atguigu.crowd.utils.ResultEntity;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * @author linlingde
@@ -67,6 +70,13 @@ public class RoleHandler {
     @RequestMapping("/role/deleteById.json")
     public ResultEntity deleteRoleById(@RequestParam(value = "id") Integer id) {
         roleService.deleteRoleById(id);
+        return ResultEntity.successWithoutData();
+    }
+
+    @ResponseBody
+    @RequestMapping("/role/remove/by/role/id/array.json")
+    public ResultEntity<String> removeByRoleIdArray(@RequestBody List<Integer> roleIdList) {
+        roleService.removeRole(roleIdList);
         return ResultEntity.successWithoutData();
     }
 }

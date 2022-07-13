@@ -78,6 +78,89 @@
                 }
             })
         })
+        // let roleArray = [{id: 5, name: "aaa"}, {id: 6, name: "bbb"}]
+        // showConfirmModel(roleArray)
+
+        $("#removeRoleBtn").click(function () {
+            let requestBody = JSON.stringify(window.roleIdArray);
+
+            $.ajax({
+                url: "role/remove/by/role/id/array.json",
+                method: "POST",
+                data: requestBody,
+                dataType: "json",
+                type: "text",
+                contentType: "application/json;charset=UTF-8",
+                success: function (response) {
+                    let result = response.result;
+                    if (result == "SUCCESS") {
+                        layer.msg("删除成功");
+                        generatePage();
+                        $("#confirmModel").modal("hide");
+                        // 删除完成后,取消选中
+                        $("#summaryBox").prop("checked", false);
+
+                    } else {
+                        layer.msg("删除失败:" + response.message);
+                    }
+                },
+                error: function (response) {
+                    layer.msg("删除失败")
+                }
+            })
+
+
+        })
+
+        $("#rolePageBody").on("click", ".deleteBtn", function () {
+
+
+            let roleId = this.id;
+            let roleName = $(this).parent().prev().text()
+            let roleArray = [{id: roleId, name: roleName}];
+            // 显示模态框
+            $("#confirmModel").modal("show");
+
+
+            showConfirmModel(roleArray);
+        });
+
+        // 给总的checkbox绑定单击响应函数
+        $("#summaryBox").click(function () {
+            // 获取当前多选框自身的状态
+            let currentStatus = this.checked;
+            // 用当前多选框的状态设置其他多选框
+            $(".itemBox").prop("checked", currentStatus);
+        });
+
+        extracted();
+
+        // 点击删除按钮执行批量删除
+        $("#batchRemove").click(function () {
+            // 获取到选中的item
+            let checkedBoxArray = $(".itemBox:checked");
+            // 创建roleArray数组
+            let roleArray = [];
+            // 对获取到的数组进行遍历
+            checkedBoxArray.each(function () {
+                // 获取id和name
+                let id = this.id;
+                let name = $(this).parent().next().text();
+                // 将id和name填充到roleArray数组中
+                roleArray.push({
+                    id: id,
+                    name: name
+                })
+            })
+            // 判断roleArray长度,大于0执行删除,等于0提示"请选择元素后进行删除"
+            if (roleArray.length == 0) {
+                layer.msg("请选择元素后再进行删除");
+                return;
+            }
+            // 执行删除
+            showConfirmModel(roleArray);
+        })
+
     })
 </script>
 <body>
@@ -103,8 +186,8 @@
                                 class="glyphicon glyphicon-search"></i> 查询
                         </button>
                     </form>
-                    <button type="button" class="btn btn-danger" style="float:right;margin-left:10px;"><i
-                            class=" glyphicon glyphicon-remove"></i> 删除
+                    <button type="button" id="batchRemove" class="btn btn-danger" style="float:right;margin-left:10px;">
+                        <i class=" glyphicon glyphicon-remove"></i> 删除
                     </button>
                     <button id="showAddModelBut" type="button" class="btn btn-primary" style="float:right;"
                     ><i class="glyphicon glyphicon-plus"></i> 新增
@@ -116,7 +199,7 @@
                             <thead>
                             <tr>
                                 <th width="30">#</th>
-                                <th width="30"><input type="checkbox"></th>
+                                <th width="30"><input id="summaryBox" type="checkbox"></th>
                                 <th>名称</th>
                                 <th width="100">操作</th>
                             </tr>
@@ -140,6 +223,8 @@
 </div>
 <jsp:include page="role-add-page.jsp"></jsp:include>
 <jsp:include page="role-edit-page.jsp"></jsp:include>
+<jsp:include page="role-confirm-page.jsp"></jsp:include>
+
 
 </body>
 </html>

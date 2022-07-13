@@ -1,6 +1,7 @@
 package com.atguigu.crowd.service.impl;
 
 import com.atguigu.crowd.entity.Role;
+import com.atguigu.crowd.entity.RoleExample;
 import com.atguigu.crowd.mapper.RoleMapper;
 import com.atguigu.crowd.service.api.RoleService;
 import com.github.pagehelper.Page;
@@ -8,6 +9,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author linlingde
@@ -53,5 +56,13 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void deleteRoleById(Integer id) {
         roleMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public void removeRole(List<Integer> roleIdList) {
+        RoleExample example = new RoleExample();
+        RoleExample.Criteria criteria = example.createCriteria();
+        criteria.andIdIn(roleIdList);
+        roleMapper.deleteByExample(example);
     }
 }

@@ -19,6 +19,23 @@
         // 生成树形结构的函数
         generationTree()
 
+        // 新增
+        $("#treeDemo").on("click", ".addBtn", function () {
+            layer.msg("你好,addBtn")
+            return false;
+        });
+        // 编辑
+        $("#treeDemo").on("click", ".editBtn", function () {
+            layer.msg("你好,editBtn")
+            return false;
+        });
+        // 删除
+        $("#treeDemo").on("click", ".removeBtn", function () {
+            layer.msg("你好,removeBtn")
+            return false;
+        });
+
+
     })
 </script>
 <div class="container-fluid">

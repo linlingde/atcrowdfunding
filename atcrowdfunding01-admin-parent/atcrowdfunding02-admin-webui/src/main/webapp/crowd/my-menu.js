@@ -42,11 +42,11 @@ function myRemoveHoverDom(treeId, treeNode) {
 // 在鼠标移入节点范围时,添加按钮组
 function myAddHoverDom(treeId, treeNode) {
     // 修改标签
-    let editBtn = "<a id='" + treeNode.id + "' class='btn btn-info dropdown-toggle btn-xs' style='margin-left:10px;padding-top:0px;' href='#' title='修改'>&nbsp;&nbsp;<i class='fa fa-fw fa-edit rbg '></i></a>";
+    let editBtn = "<a id='" + treeNode.id + "' class='btn btn-info dropdown-toggle btn-xs editBtn' style='margin-left:10px;padding-top:0px;' href='#' title='修改'>&nbsp;&nbsp;<i class='fa fa-fw fa-edit rbg '></i></a>";
     // 增加标签
-    let addBtn = "<a id='" + treeNode.id + "' class='btn btn-info dropdown-toggle btn-xs' style='margin-left:10px;padding-top:0px;' href='#' title='添加'>&nbsp;&nbsp;<i class='fa fa-fw fa-plus rbg '></i></a>";
+    let addBtn = "<a id='" + treeNode.id + "' class='btn btn-info dropdown-toggle btn-xs addBtn' style='margin-left:10px;padding-top:0px;' href='#' title='添加'>&nbsp;&nbsp;<i class='fa fa-fw fa-plus rbg '></i></a>";
     // 删除标签
-    let removeBtn = "<a id='" + treeNode.id + "' class='btn btn-info dropdown-toggle btn-xs' style='margin-left:10px;padding-top:0px;' href='#' title='删除'>&nbsp;&nbsp;<i class='fa fa-fw fa-times rbg '></i></a>";
+    let removeBtn = "<a id='" + treeNode.id + "' class='btn btn-info dropdown-toggle btn-xs removeBtn' style='margin-left:10px;padding-top:0px;' href='#' title='删除'>&nbsp;&nbsp;<i class='fa fa-fw fa-times rbg '></i></a>";
 
     // 为了在需要移除按钮组的时候能够精确定位到按钮组所在的span,需要给span设置有规律的id
     let btnGroupId = treeNode.tId + "_btnGroup";

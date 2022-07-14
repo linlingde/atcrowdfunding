@@ -28,4 +28,32 @@ public class MenuServiceImpl implements MenuService {
         MenuExample.Criteria criteria = menuExample.createCriteria();
         return menuMapper.selectByExample(menuExample);
     }
+
+    @Override
+    public void addMenu(Menu menu) {
+        menuMapper.insert(menu);
+    }
+
+    @Override
+    public void updateMenu(Menu menu) {
+        menuMapper.updateByPrimaryKeySelective(menu);
+    }
+
+    @Override
+    public boolean removeMenuById(Integer id) {
+        MenuExample menuExample = new MenuExample();
+        MenuExample.Criteria criteria = menuExample.createCriteria();
+        criteria.andPidEqualTo(id);
+
+        // 查找其有没有子节点
+        List<Menu> menuList = menuMapper.selectByExample(menuExample);
+        // size大于0表示有子节点
+        if (menuList.size() > 0) {
+            return false;
+        } else {
+            menuMapper.deleteByPrimaryKey(id);
+            return true;
+        }
+
+    }
 }

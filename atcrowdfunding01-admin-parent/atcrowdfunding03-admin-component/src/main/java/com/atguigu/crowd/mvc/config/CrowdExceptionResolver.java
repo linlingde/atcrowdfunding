@@ -4,9 +4,11 @@ import com.atguigu.crowd.constant.CrowdConstant;
 import com.atguigu.crowd.exception.LoginAcctAlreadyInUseException;
 import com.atguigu.crowd.exception.LoginAcctAlreadyInUseForUpdateException;
 import com.atguigu.crowd.exception.LoginFailedException;
+import com.atguigu.crowd.exception.RemoveMenuFailedException;
 import com.atguigu.crowd.utils.CrowdUtil;
 import com.atguigu.crowd.utils.ResultEntity;
 import com.google.gson.Gson;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -39,6 +41,16 @@ public class CrowdExceptionResolver {
             return null;
         return modelAndView;
 
+    }
+
+    @ExceptionHandler(value = RemoveMenuFailedException.class)
+    public ResponseEntity resolveRemoveMenuFailedException(RemoveMenuFailedException e,
+                                                           HttpServletRequest request,
+                                                           HttpServletResponse response)
+            throws IOException {
+
+        commonResolve(e, request, response, null);
+        return null;
     }
 
     // 处理NullPointException

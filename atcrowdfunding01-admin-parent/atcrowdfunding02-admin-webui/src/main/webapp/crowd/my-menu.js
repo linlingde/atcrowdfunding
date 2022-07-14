@@ -71,9 +71,9 @@ function myAddHoverDom(treeId, treeNode) {
 
 function myAddDivDom(treeId, treeNode) {
     // treeId:整个树形结构附着的ul的标签id
-    console.log("treeId:", treeId);
+    // console.log("treeId:", treeId);
     // 当前树形节点的全部数据,包括从后端查询得到的Menu对象的全部属性
-    console.log(treeNode)
+    // console.log(treeNode)
 
     // ztree生成id的规则
 

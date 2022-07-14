@@ -3,6 +3,7 @@ package com.atguigu.crowd;
 import com.atguigu.crowd.entity.Admin;
 import com.atguigu.crowd.entity.Role;
 import com.atguigu.crowd.mapper.AdminMapper;
+import com.atguigu.crowd.mapper.MenuMapper;
 import com.atguigu.crowd.mapper.RoleMapper;
 import com.atguigu.crowd.service.api.AdminService;
 import org.junit.Before;
@@ -100,5 +101,13 @@ public class CrowdTest {
             roleMapper.insert(role);
 
         }
+    }
+
+    @Autowired
+    private MenuMapper menuMapper;
+
+    @Test
+    public void testRemoveMenu() {
+        menuMapper.deleteByPrimaryKey(1);
     }
 }

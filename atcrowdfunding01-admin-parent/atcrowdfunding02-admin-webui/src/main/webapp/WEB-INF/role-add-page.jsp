@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div id="addModel" class="modal fade" tabindex="-1" role="dialog">
+<div id="roleAddModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -18,7 +18,7 @@
                 <input id="role" type="text" placeholder="请输入角色名称">
             </div>
             <div class="modal-footer">
-                <button onclick="$('#addModel').modal('hide')" type="button" class="btn btn-default"
+                <button onclick="$('#roleAddModal').modal('hide')" type="button" class="btn btn-default"
                         data-dismiss="modal">
                     关闭
                 </button>

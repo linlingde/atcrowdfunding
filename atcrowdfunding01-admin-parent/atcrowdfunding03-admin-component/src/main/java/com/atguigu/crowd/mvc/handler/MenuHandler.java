@@ -1,6 +1,7 @@
 package com.atguigu.crowd.mvc.handler;
 
 import com.atguigu.crowd.entity.Menu;
+import com.atguigu.crowd.exception.RemoveMenuFailedException;
 import com.atguigu.crowd.service.api.MenuService;
 import com.atguigu.crowd.utils.ResultEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,5 +72,31 @@ public class MenuHandler {
 
         // 将组装好的树形结构返回给浏览器
         return ResultEntity.successWithData(rootMenu);
+    }
+
+    @ResponseBody
+    @RequestMapping("/menu/add.json")
+    public ResultEntity<String> addMenu(Menu menu) {
+        menuService.addMenu(menu);
+        return ResultEntity.successWithoutData();
+    }
+
+    @ResponseBody
+    @RequestMapping("/menu/update.json")
+    public ResultEntity<String> updateMenu(Menu menu) {
+        menuService.updateMenu(menu);
+        return ResultEntity.successWithoutData();
+    }
+
+    @ResponseBody
+    @RequestMapping("/menu/remove.json")
+    public ResultEntity<String> removeMenu(Integer id) {
+        boolean result = menuService.removeMenuById(id);
+        if (result == true) {
+            return ResultEntity.successWithoutData();
+        } else {
+            throw new RemoveMenuFailedException("请先删除其子节点删除");
+        }
+
     }
 }

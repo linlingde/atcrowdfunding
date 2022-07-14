@@ -13,4 +13,10 @@ import java.util.List;
  **/
 public interface MenuService {
     List<Menu> getAll();
+
+    void addMenu(Menu menu);
+
+    void updateMenu(Menu menu);
+
+    boolean removeMenuById(Integer id);
 }

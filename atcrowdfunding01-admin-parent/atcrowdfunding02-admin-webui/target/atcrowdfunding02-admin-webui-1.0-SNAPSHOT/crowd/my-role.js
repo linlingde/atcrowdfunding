@@ -1,10 +1,10 @@
 // 声明专门的函数显示确认模态框
-function showConfirmModel(roleArray) {
+function showConfirmModal(roleArray) {
 
     // 创建全局数组,存放RoleId
     window.roleIdArray = []
     // 打开模态框
-    $("#confirmModel").modal("show");
+    $("#roleConfirmModal").modal("show");
     $("#roleNameSpan").empty();
     // 便利roleArray数组
     for (let i = 0; i < roleArray.length; i++) {
@@ -174,7 +174,7 @@ function addRole() {
                 // 打印消息
                 layer.msg("添加成功");
                 // 关闭模态框
-                $("#addModel").modal("hide");
+                $("#roleAddModal").modal("hide");
                 // 重新分页
                 window.pageNum = 111111;
                 generatePage();

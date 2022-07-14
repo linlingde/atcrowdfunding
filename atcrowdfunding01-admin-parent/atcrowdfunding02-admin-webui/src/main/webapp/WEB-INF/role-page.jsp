@@ -33,8 +33,8 @@
         });
 
         // 4. 给新建按钮添加单击事件,单机显示模态框
-        $("#showAddModelBut").click(function () {
-            $("#addModel").modal("show");
+        $("#showAddModalBut").click(function () {
+            $("#roleAddModal").modal("show");
         })
 
         // 5. 点击新增,向后台发送数据,保存角色,关闭模态框,跳转到最后一页
@@ -49,18 +49,18 @@
         // 参数3:回调函数
         $("#rolePageBody").on("click", ".editBtn", function () {
             // 显示模态框
-            $("#editModel").modal("show")
+            $("#roleEditModal").modal("show")
             // 获取id
             window.id = this.id;
             // 获取name
             let name = $(this).parent().prev().text()
-            $("#editModel #roleName").val(name);
+            $("#roleEditModal #roleName").val(name);
         });
 
         $("#updateRoleBtn").click(function () {
 
             // 取得文本框中的新值
-            let roleName = $("#editModel #roleName").val();
+            let roleName = $("#roleEditModal #roleName").val();
             // 发送请求
             $.ajax({
                 url: "role/update.json",
@@ -71,7 +71,7 @@
                 },
                 success: function (response) {
                     if (response.result == "SUCCESS") {
-                        $("#editModel").modal("hide");
+                        $("#roleEditModal").modal("hide");
                         generatePage()
                         layer.msg("保存成功")
                     }
@@ -79,7 +79,7 @@
             })
         })
         // let roleArray = [{id: 5, name: "aaa"}, {id: 6, name: "bbb"}]
-        // showConfirmModel(roleArray)
+        // showConfirmModal(roleArray)
 
         $("#removeRoleBtn").click(function () {
             let requestBody = JSON.stringify(window.roleIdArray);
@@ -96,7 +96,7 @@
                     if (result == "SUCCESS") {
                         layer.msg("删除成功");
                         generatePage();
-                        $("#confirmModel").modal("hide");
+                        $("#roleConfirmModal").modal("hide");
                         // 删除完成后,取消选中
                         $("#summaryBox").prop("checked", false);
 
@@ -119,10 +119,10 @@
             let roleName = $(this).parent().prev().text()
             let roleArray = [{id: roleId, name: roleName}];
             // 显示模态框
-            $("#confirmModel").modal("show");
+            $("#roleConfirmModal").modal("show");
 
 
-            showConfirmModel(roleArray);
+            showConfirmModal(roleArray);
         });
 
         // 给总的checkbox绑定单击响应函数
@@ -158,7 +158,7 @@
                 return;
             }
             // 执行删除
-            showConfirmModel(roleArray);
+            showConfirmModal(roleArray);
         })
 
     })
@@ -189,7 +189,7 @@
                     <button type="button" id="batchRemove" class="btn btn-danger" style="float:right;margin-left:10px;">
                         <i class=" glyphicon glyphicon-remove"></i> 删除
                     </button>
-                    <button id="showAddModelBut" type="button" class="btn btn-primary" style="float:right;"
+                    <button id="showAddModalBut" type="button" class="btn btn-primary" style="float:right;"
                     ><i class="glyphicon glyphicon-plus"></i> 新增
                     </button>
                     <br>

@@ -115,9 +115,10 @@
                                         <td>${admin.userName}</td>
                                         <td>${admin.email}</td>
                                         <td>
-                                            <button type="button" class="btn btn-success btn-xs">
+                                            <a class="btn btn-success btn-xs"
+                                               href="assign/to/role/page/${admin.id}/${requestScope.pageInfo.pageNum}/${param.keyword}.html">
                                                 <i class=" glyphicon glyphicon-check"></i>
-                                            </button>
+                                            </a>
                                                 <%--<button type="button" class="btn btn-primary btn-xs">--%>
                                                 <%--    <i class=" glyphicon glyphicon-pencil"></i>--%>
                                                 <%--</button>--%>

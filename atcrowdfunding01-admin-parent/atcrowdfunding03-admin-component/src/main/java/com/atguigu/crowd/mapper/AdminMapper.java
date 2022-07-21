@@ -32,4 +32,7 @@ public interface AdminMapper {
 
     List<Admin> selectAdminByKeyword(String keyword);
 
+    void deleteAdminRoleShipByAdminId(Integer id);
+
+    void insertAdminRoleShip(@Param("adminId") Integer id, @Param("roleIdList") List<Integer> roleIdList);
 }

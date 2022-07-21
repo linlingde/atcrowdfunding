@@ -112,6 +112,11 @@
         from t_admin
         where id = #{id,jdbcType=INTEGER}
     </delete>
+    <delete id="deleteAdminRoleShipByAdminId" parameterType="java.lang.Integer">
+        delete
+        from inner_admin_role
+        where admin_id = #{adminId}
+    </delete>
     <delete id="deleteByExample" parameterType="com.atguigu.crowd.entity.AdminExample">
         delete from t_admin
         <if test="_parameter != null">
@@ -123,6 +128,10 @@
                              user_name, email, create_time)
         values (#{id,jdbcType=INTEGER}, #{loginAcct,jdbcType=VARCHAR}, #{userPswd,jdbcType=CHAR},
                 #{userName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{createTime,jdbcType=CHAR})
+    </insert>
+    <insert id="insertAdminRoleShip">
+        insert into inner_admin_role(admin_id,role_id) values
+        <foreach collection="roleIdList" item="roleId" separator=",">(#{adminId},#{roleId})</foreach>
     </insert>
     <insert id="insertSelective" parameterType="com.atguigu.crowd.entity.Admin">
         insert into t_admin

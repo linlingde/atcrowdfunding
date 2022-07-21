@@ -22,4 +22,6 @@ public class CrowdConstant {
     public static final String ATTR_NAME_LOGIN_ADMIN = "loginAdmin";
     public static final String ATTR_NAME_PAGE_INFO = "pageInfo";
     public static final String ATTR_NAME_EDIT_ADMIN = "editAdmin";
+    public static final String ATTR_NAME_ASSIGNED_ROLE_LIST = "assignedRoleList";
+    public static final String ATTR_NAME_UN_ASSIGNED_ROLE_LIST = "unAssignedRoleList";
 }

@@ -32,4 +32,7 @@ public interface RoleMapper {
 
     Page<Role> selectRoleByKeyword(String keyword);
 
+    List<Role> selectAssignedRole(Integer id);
+
+    List<Role> selectUnAssignedRole(Integer id);
 }

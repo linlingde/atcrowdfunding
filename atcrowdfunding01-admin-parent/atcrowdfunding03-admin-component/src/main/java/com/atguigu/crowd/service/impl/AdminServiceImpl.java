@@ -125,4 +125,14 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    @Override
+    public void removeAdminRoleShip(Integer id) {
+        adminMapper.deleteAdminRoleShipByAdminId(id);
+    }
+
+    @Override
+    public void saveAdminRoleShip(Integer id, List<Integer> roleIdList) {
+        adminMapper.insertAdminRoleShip(id, roleIdList);
+    }
+
 }

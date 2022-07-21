@@ -9,6 +9,23 @@ public class Auth {
 
     private Integer categoryId;
 
+    public Auth() {
+
+    }
+
+    public Auth(Integer id, String name, String title, Integer categoryId) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.title = title;
+        this.categoryId = categoryId;
+    }
+
+    @Override
+    public String toString() {
+        return "Auth [id=" + id + ", name=" + name + ", title=" + title + ", categoryId=" + categoryId + "]";
+    }
+
     public Integer getId() {
         return id;
     }
@@ -23,9 +40,6 @@ public class Auth {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
-    }
-
-    public Auth() {
     }
 
     public String getTitle() {

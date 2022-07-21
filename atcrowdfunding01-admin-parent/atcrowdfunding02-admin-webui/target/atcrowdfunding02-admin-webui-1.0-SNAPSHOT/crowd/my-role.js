@@ -1,3 +1,46 @@
+// 显示auth的树形结构模态框
+function fillAuthTree() {
+    let ajaxResult = $.ajax({
+        url: "assign/get/all/auth.json",
+        type: "post",
+        async: false,
+        // 服务器端返回的数据类型
+        dataType: "json"
+    });
+    // 对ztree进行设置的json对象
+    let setting = {
+        "data": {
+            "simpleData": {
+
+                // 开启简单JSON功能
+                "enable": true,
+
+                // 使用categoryId属性关联父节点，不用默认的pId了
+                "pIdKey": "categoryId"
+            },
+            "key": {
+                // 使用title属性显示节点名称，不用默认的name作为属性名了
+                "name": "title"
+            }
+        },
+        "check": {
+            "enable": true
+        }
+    };
+    // 成功
+    if (ajaxResult.status == 200 && ajaxResult.statusText == "success") {
+        let zNodes = ajaxResult.responseJSON.data;
+        $.fn.zTree.init($("#authTreeDemo"), setting, zNodes);
+        // 获取zTreeObj对象
+        let zTreeObj = $.fn.zTree.getZTreeObj("authTreeDemo");
+        // 设置节点默认展开
+        zTreeObj.expandAll(true);
+    } else {
+        layer.msg("查询失败:" + ajaxResult.responseJSON.message)
+    }
+
+}
+
 // 声明专门的函数显示确认模态框
 function showConfirmModal(roleArray) {
 
@@ -48,14 +91,6 @@ function getPageInfoRemote() {
         "async": false,
         // 如何解析服务器端返回的数据
         "dataType": "json"
-        // // 成功时进行的操作
-        // "success": function (response) {
-        //
-        // },
-        // // 失败时进行的操作
-        // "error": function (response) {
-        //
-        // }
     });
 
 
@@ -107,7 +142,7 @@ function fillTableBody(pageInfo) {
         let numberTd = "<td>" + (i + 1) + "</td>";
         let checkBoxTd = "<td><input id='" + role.id + "' class='itemBox' type='checkbox'/></td>";
         let roleNameTd = "<td>" + roleName + "</td>";
-        let checkBtn = "<button type='button' class='btn btn-success btn-xs'><i class=' glyphicon glyphicon-check'></i></button>"
+        let checkBtn = "<button id='" + role.id + "' type='button' class='btn btn-success btn-xs checkBtn'><i class=' glyphicon glyphicon-check'></i></button>"
         let editBtn = "<button id='" + role.id + "' type='button' class='btn btn-primary btn-xs editBtn'><i class=' glyphicon glyphicon-pencil'></i></button>"
         let deleteBtn = "<button id='" + role.id + "' type='button' class='btn btn-danger btn-xs deleteBtn'><i class=' glyphicon glyphicon-remove'></i></button>"
 

@@ -11,6 +11,8 @@
 <jsp:include page="include-head.jsp"/>
 <link rel="stylesheet" href="css/pagination.css">
 <script type="text/javascript" src="jquery/jquery.pagination.js"></script>
+<link rel="stylesheet" href="ztree/zTreeStyle.css">
+<script type="text/javascript" src="ztree/jquery.ztree.all-3.5.min.js"></script>
 <script type="text/javascript" src="crowd/my-role.js"></script>
 <script type="text/javascript">
     $(function () {
@@ -111,6 +113,17 @@
 
 
         })
+
+        $("#rolePageBody").on("click", ".checkBtn", function () {
+            // 获取id
+            let roleId = this.id;
+            // 显示页面
+            $("#assignModal").modal("show");
+
+            // 显示树形结构
+            fillAuthTree()
+
+        });
 
         $("#rolePageBody").on("click", ".deleteBtn", function () {
 
@@ -224,6 +237,7 @@
 <jsp:include page="role-add-page.jsp"></jsp:include>
 <jsp:include page="role-edit-page.jsp"></jsp:include>
 <jsp:include page="role-confirm-page.jsp"></jsp:include>
+<jsp:include page="modal-role-assign-auth.jsp"></jsp:include>
 
 
 </body>

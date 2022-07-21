@@ -1,15 +1,19 @@
 package com.atguigu.crowd.mvc.handler;
 
 import com.atguigu.crowd.constant.CrowdConstant;
+import com.atguigu.crowd.entity.Auth;
 import com.atguigu.crowd.entity.Role;
 import com.atguigu.crowd.service.api.AdminService;
+import com.atguigu.crowd.service.api.AuthService;
 import com.atguigu.crowd.service.api.RoleService;
+import com.atguigu.crowd.utils.ResultEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -27,6 +31,9 @@ public class AssignHandler {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private AuthService authService;
 
     //    assign/to/role/page/${admin.id}/${requestScope.pageInfo.pageNum}/${param.keyword}.html
     @RequestMapping("/assign/to/role/page/{id}/{pageNum}/{keyword}.html")
@@ -66,5 +73,18 @@ public class AssignHandler {
             adminService.saveAdminRoleShip(adminId, roleIdList);
 
         return "redirect:/admin/get/page.html?keyword=" + keyword + "&pageNum=" + pageNum;
+    }
+
+    @ResponseBody
+    @RequestMapping("/assign/get/all/auth.json")
+    public ResultEntity<List<Auth>> getAuthList() {
+
+        List<Auth> list = authService.getAuthList();
+        for (Auth auth : list) {
+            System.err.println();
+        }
+
+        ResultEntity<List<Auth>> entity = ResultEntity.successWithData(list);
+        return entity;
     }
 }

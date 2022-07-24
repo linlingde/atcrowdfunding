@@ -115,6 +115,8 @@
         })
 
         $("#rolePageBody").on("click", ".checkBtn", function () {
+            // 获取当前操作的roleId
+            window.roleId = this.id;
             // 获取id
             let roleId = this.id;
             // 显示页面
@@ -172,6 +174,51 @@
             }
             // 执行删除
             showConfirmModal(roleArray);
+        });
+
+        // 给分配权限模态框中的分配按钮绑定响应函数
+        $("#assignBtn").click(function () {
+            // 收集树形结构的各个节点中被勾选的各个节点,
+            // 1. 声明数组存放id
+            let authIdArray = [];
+            // 2. 获取zTreeObj对象
+            let zTreeObj = $.fn.zTree.getZTreeObj("authTreeDemo");
+            // 3. 获取当前被勾选的节点
+            let checkedNodes = zTreeObj.getCheckedNodes();
+            // 4. 遍历
+            for (let i = 0; i < checkedNodes.length; i++) {
+                let checkedNode = checkedNodes[i];
+                let authId = checkedNode.id;
+                authIdArray.push(authId);
+            }
+            // 发送请求执行分配
+            let requestBody = {
+                "authIdArray": authIdArray,
+                "roleId": [window.roleId]
+            };
+            requestBody = JSON.stringify(requestBody);
+            // 发送请求
+            $.ajax({
+                "url": "assign/do/role/assign/auth.json",
+                "type": "post",
+                "data": requestBody,
+                "contentType": "application/json;charset=UTF-8",
+                "dataType": "json",
+                "success": function (response) {
+                    let result = response.result;
+                    if (result == "SUCCESS") {
+                        layer.msg("操作成功");
+                    }
+                    if (result == "FAILED") {
+                        layer.msg("操作失败" + response.message);
+                    }
+                },
+                "error": function (response) {
+                    layer.msg(response.status + "" + response.statusText);
+                }
+            });
+            // 关闭模态框
+            $("#assignModal").modal("hide");
         })
 
     })

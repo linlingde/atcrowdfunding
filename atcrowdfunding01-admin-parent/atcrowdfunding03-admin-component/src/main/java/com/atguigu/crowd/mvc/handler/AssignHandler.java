@@ -10,12 +10,10 @@ import com.atguigu.crowd.utils.ResultEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author linlingde
@@ -86,5 +84,23 @@ public class AssignHandler {
 
         ResultEntity<List<Auth>> entity = ResultEntity.successWithData(list);
         return entity;
+    }
+
+    @ResponseBody
+    @RequestMapping("/assign/get/assigned/auth/id/by/role/id.json")
+    public ResultEntity<List<Integer>> getAssignedAuthIdByRoleId(
+            @RequestParam("roleId") Integer roleId
+    ) {
+
+        List<Integer> authIdList = authService.getAssignedAuthIdByRoleId(roleId);
+
+        return ResultEntity.successWithData(authIdList);
+    }
+
+    @ResponseBody
+    @RequestMapping("/assign/do/role/assign/auth.json")
+    public ResultEntity<String> saveRoleAuthRelationship(@RequestBody Map<String, List<Integer>> map) {
+        authService.saveRoleAuthRelationship(map);
+        return ResultEntity.successWithoutData();
     }
 }

@@ -3,6 +3,7 @@ package com.atguigu.crowd.service.api;
 import com.atguigu.crowd.entity.Auth;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author linlingde
@@ -13,4 +14,8 @@ import java.util.List;
  **/
 public interface AuthService {
     List<Auth> getAuthList();
+
+    List<Integer> getAssignedAuthIdByRoleId(Integer id);
+
+    void saveRoleAuthRelationship(Map<String, List<Integer>> map);
 }

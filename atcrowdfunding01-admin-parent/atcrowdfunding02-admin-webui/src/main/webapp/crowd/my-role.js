@@ -28,17 +28,46 @@ function fillAuthTree() {
         }
     };
     // 成功
-    if (ajaxResult.status == 200 && ajaxResult.statusText == "success") {
-        let zNodes = ajaxResult.responseJSON.data;
-        $.fn.zTree.init($("#authTreeDemo"), setting, zNodes);
-        // 获取zTreeObj对象
-        let zTreeObj = $.fn.zTree.getZTreeObj("authTreeDemo");
-        // 设置节点默认展开
-        zTreeObj.expandAll(true);
-    } else {
+    if (ajaxResult.status != 200 && ajaxResult.statusText == "success") {
         layer.msg("查询失败:" + ajaxResult.responseJSON.message)
+        return;
     }
+    let zNodes = ajaxResult.responseJSON.data;
+    $.fn.zTree.init($("#authTreeDemo"), setting, zNodes);
+    // 获取zTreeObj对象
+    let zTreeObj = $.fn.zTree.getZTreeObj("authTreeDemo");
+    // 设置节点默认展开
+    zTreeObj.expandAll(true);
 
+    // 查询已经分配的Auth的id组成的数组
+    ajaxResult = $.ajax({
+        "url": "assign/get/assigned/auth/id/by/role/id.json",
+        "type": "post",
+        "data": {
+            "roleId": window.roleId
+        },
+        "async": false,
+        "dataType": "json",
+    })
+    // 判断有没有出错
+    if (ajaxResult.status != 200) {
+        layer.msg("出错了" + ajaxResult.status + ajaxResult.statusText)
+        return;
+    }
+    // 没有出错,拿到数据
+    let authIdArray = ajaxResult.responseJSON.data;
+
+    // 根据数据把对应的选项勾选上
+    for (let i = 0; i < authIdArray.length; i++) {
+        let authId = authIdArray[i];
+        // 根据id勾选对应节点
+        let treeNode = zTreeObj.getNodeByParam("id", authId)
+        // 将treeNode设置为被勾选
+        // 参数1:要勾选的节点
+        // 参数2:将其勾选
+        // 参数3:取消其联动
+        zTreeObj.checkNode(treeNode, true, false);
+    }
 }
 
 // 声明专门的函数显示确认模态框

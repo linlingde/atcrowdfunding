@@ -31,7 +31,6 @@
     <mvc:view-controller path="/admin/add.html" view-name="admin-add"/>
     <mvc:view-controller path="/role/get/page.json" view-name="role-page"/>
     <mvc:view-controller path="/menu/get/page.json" view-name="menu-page"/>
-    <mvc:view-controller path="/auth/get/page.html" view-name="auth-list"/>
 
     <!--注册拦截器-->
     <mvc:interceptors>

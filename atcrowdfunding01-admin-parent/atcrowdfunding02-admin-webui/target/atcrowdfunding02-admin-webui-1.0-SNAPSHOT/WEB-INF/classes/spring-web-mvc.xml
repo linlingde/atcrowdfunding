@@ -31,24 +31,23 @@
     <mvc:view-controller path="/admin/add.html" view-name="admin-add"/>
     <mvc:view-controller path="/role/get/page.json" view-name="role-page"/>
     <mvc:view-controller path="/menu/get/page.json" view-name="menu-page"/>
-    <mvc:view-controller path="/auth/get/page.html" view-name="auth-list"/>
 
     <!--注册拦截器-->
-    <mvc:interceptors>
-        <mvc:interceptor>
-            <!--
-                配置要拦截的资源:
-                    /*:代表一层路径
-                    /**:代表多层路径
-            -->
-            <mvc:mapping path="/**"/>
-            <!--配置不拦截的资源-->
-            <mvc:exclude-mapping path="/admin/to/login/page.html"/>
-            <mvc:exclude-mapping path="/admin/do/login.html"/>
-            <mvc:exclude-mapping path="/admin/do/logout.html"/>
-            <bean class="com.atguigu.crowd.mvc.interceptor.LoginInterceptor" id="loginInterceptor"/>
-        </mvc:interceptor>
-    </mvc:interceptors>
+    <!--<mvc:interceptors>-->
+    <!--    <mvc:interceptor>-->
+    <!--        &lt;!&ndash;-->
+    <!--            配置要拦截的资源:-->
+    <!--                /*:代表一层路径-->
+    <!--                /**:代表多层路径-->
+    <!--        &ndash;&gt;-->
+    <!--        <mvc:mapping path="/**"/>-->
+    <!--        &lt;!&ndash;配置不拦截的资源&ndash;&gt;-->
+    <!--        <mvc:exclude-mapping path="/admin/to/login/page.html"/>-->
+    <!--        <mvc:exclude-mapping path="/admin/do/login.html"/>-->
+    <!--        <mvc:exclude-mapping path="/admin/do/logout.html"/>-->
+    <!--        <bean class="com.atguigu.crowd.mvc.interceptor.LoginInterceptor" id="loginInterceptor"/>-->
+    <!--    </mvc:interceptor>-->
+    <!--</mvc:interceptors>-->
 
     <!--配置xml异常处理机制-->
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"

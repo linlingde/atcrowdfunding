@@ -14,6 +14,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -34,11 +35,17 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private AdminMapper adminMapper;
 
+    // 保存Service时加密
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     @Override
     public String saveAdmin(Admin admin) {
         // 将密码加密
         String userPswd = admin.getUserPswd();
-        userPswd = CrowdUtil.toMd5(userPswd);
+        //userPswd = CrowdUtil.toMd5(userPswd);
+        // 加密
+        userPswd = passwordEncoder.encode(userPswd);
         admin.setUserPswd(userPswd);
         // 设置时间
         Date date = new Date();
@@ -133,6 +140,17 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void saveAdminRoleShip(Integer id, List<Integer> roleIdList) {
         adminMapper.insertAdminRoleShip(id, roleIdList);
+    }
+
+    @Override
+    public Admin getAdminByLoginAcct(String loginAcct) {
+        AdminExample adminExample = new AdminExample();
+        Criteria criteria = adminExample.createCriteria();
+        criteria.andLoginAcctEqualTo(loginAcct);
+        List<Admin> adminList = adminMapper.selectByExample(adminExample);
+        Admin admin = adminList.get(0);
+
+        return admin;
     }
 
 }

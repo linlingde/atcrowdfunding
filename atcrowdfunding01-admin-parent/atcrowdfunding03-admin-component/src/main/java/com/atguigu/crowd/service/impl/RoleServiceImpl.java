@@ -67,9 +67,9 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> getAssignedRole(Integer id) {
+    public List<Role> getAssignedRole(Integer adminId) {
 
-        List<Role> roleList = roleMapper.selectAssignedRole(id);
+        List<Role> roleList = roleMapper.selectAssignedRole(adminId);
         return roleList;
 
     }

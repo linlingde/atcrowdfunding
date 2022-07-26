@@ -120,6 +120,29 @@ public class CrowdExceptionResolver {
 
     }
 
+    @ExceptionHandler(value = Exception.class)
+    public ModelAndView resolveException(Exception e, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String viewName = "system-error";
+        ModelAndView modelAndView = commonResolve(e, request, response, viewName);
+        if (modelAndView == null) {
+            return null;
+        }
+        return modelAndView;
+    }
+
+    //@ExceptionHandler(value = AccessDeniedException.class)
+    //public ModelAndView resolveAccessDeniedException(
+    //        AccessDeniedException e,
+    //        HttpServletRequest request,
+    //        HttpServletResponse response) throws IOException {
+    //    String viewName = "system-error";
+    //    ModelAndView modelAndView = commonResolve(e, request, response, viewName);
+    //    if (modelAndView == null) return null;
+    //
+    //    // 9. 返回ModelAndView
+    //    return modelAndView;
+    //}
+
     /**
      * @param e        :异常
      * @param request  :请求

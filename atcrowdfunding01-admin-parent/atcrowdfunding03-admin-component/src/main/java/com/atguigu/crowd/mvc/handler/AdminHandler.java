@@ -7,6 +7,7 @@ import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -85,6 +86,7 @@ public class AdminHandler {
         return "redirect:/admin/get/page.html?keyword=" + keyword + "&pageNum=" + pageNum;
     }
 
+    @PreAuthorize("hasAuthority('user:save')")
     @RequestMapping("admin/add/user.html")
     public String addAdmin(Admin admin) {
         adminService.saveAdmin(admin);

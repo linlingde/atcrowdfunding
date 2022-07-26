@@ -25,6 +25,7 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
+
     <!--将请求地址与视图名称关联起来-->
     <mvc:view-controller path="/admin/to/login/page.html" view-name="admin-login"/>
     <mvc:view-controller path="/admin/to/main/page.html" view-name="admin-main"/>
@@ -61,5 +62,7 @@
             </props>
         </property>
     </bean>
+
+    <bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" id="passwordEncoder"></bean>
 
 </beans>

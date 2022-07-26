@@ -51,7 +51,7 @@ public class CrowdTest {
 
     @Test
     public void testTx() {
-        Admin admin = new Admin(null, "lld", "lld", "lld", "114@qq.com", "2022-07-07");
+        Admin admin = new Admin(null, "LLD", "123", "lld", "114@qq.com", null);
         String s = adminService.saveAdmin(admin);
         logger.info(s);
     }

@@ -44,5 +44,4 @@
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" id="mapperScannerConfigurer">
         <property name="basePackage" value="com.atguigu.crowd.mapper"/>
     </bean>
-
 </beans>
